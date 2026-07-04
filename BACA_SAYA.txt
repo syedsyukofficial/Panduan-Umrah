@@ -1,0 +1,2 @@
+Letakkan fail audio bacaan talbiah di sini dengan nama: talbiah.mp3
+Pemain audio di Bahagian 4 (Talbiah) akan berfungsi secara automatik.
