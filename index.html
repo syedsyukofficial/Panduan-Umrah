@@ -186,6 +186,8 @@ figure.foto figcaption{padding:.7rem 1rem;font-size:.95rem;color:var(--teks-2);
   border-top:3px solid var(--emas)}
 figure.foto figcaption b{color:var(--teks)}
 figure.foto .kredit{font-size:.75rem;opacity:.7;display:block}
+figure.foto.foto-penuh img{height:auto;object-fit:contain;cursor:default;background:#F7F4EA}
+figure.foto.foto-penuh:hover img{transform:none}
 .galeri{display:grid;gap:1rem}
 @media(min-width:720px){.galeri{grid-template-columns:1fr 1fr}}
 .svg-rajah{margin:1rem 0;border-radius:var(--radius);border:1px solid var(--garis);
@@ -446,18 +448,14 @@ footer .kecil{font-size:.8rem;opacity:.7;margin-top:.8rem;max-width:620px;margin
     <h3><span class="titik"></span>Cara Memakai Pakaian Ihram</h3>
     <div class="grid2">
       <div>
-        <figure class="foto" style="margin:0">
-          <img src="imej/ihram-lelaki.png" alt="Ilustrasi cara pemakaian ihram lelaki - kain rida' di bahu dan izar di pinggang" loading="lazy"
-               data-lb="Pakaian Ihram Lelaki"
-               data-desc="Dua helai kain putih tidak berjahit: kain izar dililit di pinggang menutup pusat hingga bawah lutut, kain rida' diselimut di bahu. Tidak boleh memakai pakaian berjahit membentuk anggota, songkok, atau kasut yang menutup jari dan tumit.">
+        <figure class="foto foto-penuh" style="margin:0">
+          <img src="imej/ihram-lelaki.png" alt="Ilustrasi cara pemakaian ihram lelaki - kain rida' di bahu dan izar di pinggang" loading="lazy">
           <figcaption><b>Ihram lelaki:</b> 2 helai kain putih tidak berjahit (rida' &amp; izar)</figcaption>
         </figure>
       </div>
       <div>
-        <figure class="foto" style="margin:0">
-          <img src="imej/ihram-muslimah.png" alt="Ilustrasi cara pemakaian ihram muslimah - pakaian longgar menutup aurat, muka dan tapak tangan terbuka" loading="lazy"
-               data-lb="Pakaian Muslimah Dalam Ihram"
-               data-desc="Pakaian biasa yang menutup aurat dengan sempurna dan longgar. Muka dan kedua tapak tangan TIDAK ditutup — dilarang memakai purdah dan sarung tangan ketika berihram.">
+        <figure class="foto foto-penuh" style="margin:0">
+          <img src="imej/ihram-muslimah.png" alt="Ilustrasi cara pemakaian ihram muslimah - pakaian longgar menutup aurat, muka dan tapak tangan terbuka" loading="lazy">
           <figcaption><b>Ihram muslimah:</b> pakaian biasa menutup aurat, tanpa purdah &amp; sarung tangan</figcaption>
         </figure>
       </div>
