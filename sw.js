@@ -1,5 +1,5 @@
 /* Service Worker - Panduan Umrah Bergambar (sokongan luar talian) */
-var CACHE = 'panduan-umrah-v1';
+var CACHE = 'panduan-umrah-v2';
 var FAIL_TERAS = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', function (e) {
@@ -14,9 +14,25 @@ self.addEventListener('activate', function (e) {
   self.clients.claim();
 });
 
-/* Strategi: cache dahulu, kemudian rangkaian; simpan salinan (termasuk foto & fon) untuk kegunaan luar talian */
+/* Strategi: HALAMAN (HTML) sentiasa cuba RANGKAIAN dahulu supaya kemas kini terus terpapar;
+   guna cache hanya jika offline. Aset lain (gambar/fon) — cache dahulu untuk kelajuan & offline. */
 self.addEventListener('fetch', function (e) {
   if (e.request.method !== 'GET') return;
+  var ialahHalaman = e.request.mode === 'navigate' || (e.request.headers.get('accept') || '').indexOf('text/html') !== -1;
+
+  if (ialahHalaman) {
+    e.respondWith(
+      fetch(e.request).then(function (jawapan) {
+        var salinan = jawapan.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, salinan); });
+        return jawapan;
+      }).catch(function () {
+        return caches.match(e.request).then(function (sedia) { return sedia || caches.match('./index.html'); });
+      })
+    );
+    return;
+  }
+
   e.respondWith(
     caches.match(e.request).then(function (sedia) {
       if (sedia) return sedia;
@@ -26,8 +42,6 @@ self.addEventListener('fetch', function (e) {
           caches.open(CACHE).then(function (c) { c.put(e.request, salinan); });
         }
         return jawapan;
-      }).catch(function () {
-        return caches.match('./index.html');
       });
     })
   );
