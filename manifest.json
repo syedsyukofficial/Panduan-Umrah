@@ -1,7 +1,7 @@
 {
-  "name": "Panduan Umrah Bergambar",
+  "name": "Panduan Umrah",
   "short_name": "Panduan Umrah",
-  "description": "Panduan Umrah langkah demi langkah dari Miqat hingga Tahallul - bergambar dan interaktif.",
+  "description": "Panduan Umrah langkah demi langkah dari Miqat hingga Tahallul - lengkap dan interaktif.",
   "lang": "ms",
   "start_url": "./index.html",
   "scope": "./",
