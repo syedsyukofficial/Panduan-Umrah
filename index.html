@@ -309,6 +309,7 @@ footer .kecil{font-size:.8rem;opacity:.7;margin-top:.8rem;max-width:620px;margin
       </div>
     </div>
     <button class="ikon-btn" id="btnCari" aria-label="Carian" title="Cari">&#128269;</button>
+    <button class="ikon-btn" id="btnPasang" aria-label="Pasang aplikasi" title="Pasang sebagai Aplikasi" style="display:none">&#128241;</button>
     <button class="ikon-btn" id="btnTema" aria-label="Tukar mod gelap atau terang" title="Mod Gelap/Terang">&#127769;</button>
   </div>
   <div id="panelCari">
@@ -1299,6 +1300,53 @@ document.querySelectorAll('.senarai-semak').forEach(function(sen){
 document.querySelectorAll('audio').forEach(function(a){
   a.addEventListener('error', function(){}, true);
 });
+
+/* ===== Pasang Aplikasi (PWA) ===== */
+var btnPasang = document.getElementById('btnPasang');
+var eventPasangTertangguh = null;
+
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  eventPasangTertangguh = e;
+  btnPasang.style.display = 'inline-flex';
+});
+
+function iosSafari(){
+  var ua = window.navigator.userAgent;
+  var iOS = /iPad|iPhone|iPod/.test(ua);
+  var webkit = /WebKit/.test(ua);
+  var bukanChrome = !/CriOS/.test(ua);
+  return iOS && webkit && bukanChrome;
+}
+function sudahDipasang(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+// Untuk iOS (Safari tidak sokong beforeinstallprompt) - tunjuk butang dengan arahan manual
+if (iosSafari() && !sudahDipasang()) {
+  btnPasang.style.display = 'inline-flex';
+}
+
+btnPasang.addEventListener('click', function(){
+  if (eventPasangTertangguh) {
+    eventPasangTertangguh.prompt();
+    eventPasangTertangguh.userChoice.then(function(){ eventPasangTertangguh = null; btnPasang.style.display = 'none'; });
+    return;
+  }
+  if (iosSafari()) {
+    piIsi.innerHTML = '<h3>📲 Pasang di iPhone/iPad</h3>' +
+      '<p>1. Tekan ikon <b>Kongsi (Share) ⬆️</b> di bar bawah Safari.</p>' +
+      '<p>2. Skrol dan pilih <b>"Add to Home Screen" (Tambah ke Skrin Utama)"</b>.</p>' +
+      '<p>3. Tekan <b>"Add"</b> di penjuru kanan atas.</p>' +
+      '<p style="color:var(--teks-2);font-size:.95rem">Aplikasi akan muncul di skrin utama seperti apps biasa, boleh dibuka tanpa buka browser.</p>';
+    panelInfo.classList.add('buka');
+    return;
+  }
+  piIsi.innerHTML = '<h3>📲 Pasang Aplikasi</h3><p>Buka menu pilihan (⋮ tiga titik) di penjuru atas browser, kemudian pilih <b>"Add to Home screen"</b> atau <b>"Install app"</b>.</p>';
+  panelInfo.classList.add('buka');
+});
+
+window.addEventListener('appinstalled', function(){ btnPasang.style.display = 'none'; });
 
 /* ===== PWA: daftar service worker (hanya jika dilayan melalui http/https) ===== */
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
