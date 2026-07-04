@@ -828,6 +828,23 @@ footer .kecil{font-size:.8rem;opacity:.7;margin-top:.8rem;max-width:620px;margin
     <div class="nota"><b>✎ Nota Mutawwif</b>Rasulullah ﷺ tidak mengkhususkan bacaan tertentu bagi setiap pusingan — berdoa dan berzikirlah dengan apa sahaja yang dihafal, dalam bahasa apa pun. Doa yang khusus daripada Baginda ialah doa antara Rukun Yamani dan Hajarul Aswad di atas. Lelaki disunatkan <b>berlari-lari anak (ramal)</b> pada pusingan 1–3 dan berjalan biasa pada pusingan 4–7 (jika keadaan mengizinkan).</div>
   </div>
 
+  <div class="kad">
+    <h3><span class="titik"></span>Penanda Pusingan Tawaf Anda</h3>
+    <p>Gunakan pembilang ini semasa amali atau latihan. Ketik <b>+ Tambah</b> setiap kali tiba semula di penjuru Hajarul Aswad (lampu hijau):</p>
+    <div class="saie-kaunter">
+      <div class="saie-nombor" id="tawafNombor">0</div>
+      <div class="saie-arah" id="tawafArah">Sedia di Hajarul Aswad — mula pusingan pertama</div>
+      <div class="saie-butang">
+        <button id="btnTawafTambah">+ Tambah Pusingan</button>
+        <button id="btnTawafSemula">Set Semula</button>
+      </div>
+      <div class="saie-titik" id="tawafTitik">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+      </div>
+      <div class="saie-siap-mesej" id="tawafSiap">✓ Alhamdulillah, 7 pusingan lengkap — teruskan ke Solat Sunat Tawaf di belakang Maqam Ibrahim.</div>
+    </div>
+  </div>
+
   <figure class="foto">
     <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kaaba%2C_Masjid_Al-Haram%2C_Mecca%2C_Saudi_Arabia_-_panoramio.jpg?width=1200"
          alt="Jemaah bertawaf mengelilingi Kaabah di kawasan mataf" loading="lazy"
@@ -1311,6 +1328,24 @@ function lukisSaie(){
 document.getElementById('btnSaieTambah').addEventListener('click', function(){ if (saie < 7){ saie++; lukisSaie(); } });
 document.getElementById('btnSaieSemula').addEventListener('click', function(){ saie = 0; lukisSaie(); });
 lukisSaie();
+
+/* ===== Kaunter Tawaf ===== */
+var tawaf = 0;
+var tawafNombor = document.getElementById('tawafNombor');
+var tawafArah = document.getElementById('tawafArah');
+var tawafTitik = document.getElementById('tawafTitik').children;
+var tawafSiap = document.getElementById('tawafSiap');
+function lukisTawaf(){
+  tawafNombor.textContent = tawaf;
+  for (var i = 0; i < 7; i++) tawafTitik[i].classList.toggle('siap', i < tawaf);
+  tawafSiap.classList.toggle('tunjuk', tawaf >= 7);
+  if (tawaf >= 7) tawafArah.textContent = 'Selesai 7 pusingan di Hajarul Aswad ✓';
+  else if (tawaf === 0) tawafArah.textContent = 'Sedia di Hajarul Aswad — mula pusingan pertama';
+  else tawafArah.textContent = 'Dalam pusingan ke-' + (tawaf+1) + ' — teruskan hingga kembali ke Hajarul Aswad';
+}
+document.getElementById('btnTawafTambah').addEventListener('click', function(){ if (tawaf < 7){ tawaf++; lukisTawaf(); } });
+document.getElementById('btnTawafSemula').addEventListener('click', function(){ tawaf = 0; lukisTawaf(); });
+lukisTawaf();
 
 /* ===== Checklist ===== */
 document.querySelectorAll('.senarai-semak').forEach(function(sen){
